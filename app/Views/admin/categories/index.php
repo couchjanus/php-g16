@@ -4,7 +4,7 @@
             <i class="fa fa-table"></i> <?php echo $title;?> <a href="/admin/categories/create" class="float-right"><button class="btn btn-primary text-right"><span data-feather="plus"></span> Add New</button></a>
         </div>
         <div class="table-responsive">
-            <?php if (count($categories)>0):?>
+            <?php if (!empty($categories) && count($categories)>0):?>
             <table class="table table-striped table-sm">
               <thead>
                 <tr>

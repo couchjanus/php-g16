@@ -1,17 +1,11 @@
 <?php
 // AboutController.php
 
-class AboutController
+class AboutController extends Controller
 {
-    // Class properties and methods go here   
-    public function __construct()
-    {
-		  view('about/index', ['title'=>'About <b>Our Cats</b> Members']);
-    }
-
-    // public function index()
-    // {
-    //   $title = 'About <b>Our Cats</b> Members';
-		//   view('about/index', ['title'=>$title]);
-    // }
+   public function index()
+   {
+       $title = 'About Our Cats Members';
+       $this->view->render('about/index', compact('title'));
+   }
 }

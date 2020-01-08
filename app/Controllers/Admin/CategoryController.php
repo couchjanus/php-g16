@@ -1,16 +1,34 @@
 <?php
 // CategoryController.php
-require_once CONFIG.'/db.php';
 
-class CategoryController
+// class CategoryController extends Controller
+// {
+//    public function index()
+//    {
+//        $title = 'Categories List';
+//        $this->view->render('admin/categories/index', compact('title'), 'admin');
+//    }
+
+//    public function create()
+//    {
+//        $title = 'Add New Category';
+//        $this->view->render('admin/categories/create', compact('title'), 'admin');
+//    }
+
+// }    
+
+const HOST = 'localhost';
+const DBUSER = 'root';
+const DBPASSWORD = 'ghbdtn';
+const DATABASE = 'store';
+
+class CategoryController extends Controller
 {
-    public function index()
-    {
+   public function index()
+   {
         $title = 'Categories List';
-
         // Устанавливает новое соединение с сервером MySQL 
         $conn = new mysqli(HOST, DBUSER, DBPASSWORD, DATABASE);
-
         /*
         * Это "официальный" объектно-ориентированный способ 
         * Установить новое соединение, однако
@@ -30,25 +48,24 @@ class CategoryController
         $categories = [];
    
         // извлечение ассоциативного массива
-
         // получить данные одной строки в виде ассоциативного массива
         
         $row = $result->fetch_assoc();
 
         // получить данные одной строки в виде объекта
-        // $row = $resultQuery->fetch_object();
+        // $row = $result->fetch_object();
 
         // получить все строки, вариант № 1
         // $entries = array();
-        // while ($entry = $resultQuery->fetch_object()) {
+        // while ($entry = $result->fetch_object()) {
         //     $entries[] = $entry;
         // }
 
         // получить все строки в виде ассоциативного массива, вариант № 2
-        // $entries = $resultQuery->fetch_all(MYSQLI_ASSOC);
+        // $entries = $result->fetch_all(MYSQLI_ASSOC);
 
         // num_rows содержит количество результатов выборки
-        // if (!$resultQuery->num_rows) {
+        // if (!$result->num_rows) {
         //     // если нет результатов выборки - выполнить какое-то действие
         // } 
    
@@ -70,37 +87,36 @@ class CategoryController
             
         // закрываем подключение
         $conn->close(); 
-    
-        view('admin/categories/index', compact('title', 'categories'), 'admin');
-    }
 
-    public function create()
-    {
-        if (isset($_POST) and !empty($_POST)) {
+       $this->view->render('admin/categories/index', compact('title', 'categories'), 'admin');
+   }
 
-            // Устанавливает новое соединение с сервером MySQL 
-            $conn = new mysqli(HOST, DBUSER, DBPASSWORD, DATABASE);
+   public function create()
+   {
+      if (isset($_POST) and !empty($_POST)) {
 
-            if ($conn->connect_error) {
-                die('Ошибка подключения (' . $conn->connect_errno . ') ' . $conn->connect_error);
-            }
+        // Устанавливает новое соединение с сервером MySQL 
+        $conn = new mysqli(HOST, DBUSER, DBPASSWORD, DATABASE);
 
-            $name = $conn->real_escape_string($_POST['name']);
-
-            // выполняем операции с базой данных
-
-            if ($conn->query("INSERT INTO categories (name) VALUES ('$name')")) {
-                $affected_rows = sprintf("%d строк вставлено.\n", $conn->affected_rows);
-            }
-                
-            // закрываем подключение
-            $conn->close(); 
-            
-            header('Location: /admin/categories');
-
-            // Helper::redirect('/admin/categories');
+        if ($conn->connect_error) {
+            die('Ошибка подключения (' . $conn->connect_errno . ') ' . $conn->connect_error);
         }
-        $title = 'Add New Category';
-        view('admin/categories/create', compact('title'), 'admin');
+
+        $name = $conn->real_escape_string($_POST['name']);
+
+        // выполняем операции с базой данных
+        if ($conn->query("INSERT INTO categories (name) VALUES ('$name')")) {
+            $affected_rows = sprintf("%d строк вставлено.\n", $conn->affected_rows);
+        }
+                
+        // закрываем подключение
+        $conn->close(); 
+            
+        header('Location: /admin/categories');
+        // Helper::redirect('/admin/categories');
+      }
+
+      $title = 'Add New Category';
+      $this->view->render('admin/categories/create', compact('title'), 'admin');
     }
-}
+}    
