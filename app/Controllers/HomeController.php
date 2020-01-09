@@ -1,35 +1,11 @@
 <?php
 // HomeController.php
 
-// class HomeController
-// {
-//     // public function index()
-//     // {
-//     //   $title = 'Our <b>Best Cat Members Home Page </b>';
-// 		//   view('home/index', ['title'=>$title]);
-//     // }
-  
-//   public function index()
-//   {
-//       $title = 'Our Best Cats Members Home Page';
-//       $this->view('home/index', compact('title'));
-//   }
-
-//   public function view($path, $data = null, $layout='app')
-//   {
-//       if (!empty($data)) {  extract($data); }
-//       $path .= '.php';
-//       return require VIEWS."/layouts/${layout}.php";
-//   }
-// }
-
-// 
-
-class HomeController extends View
+class HomeController extends Controller
 {
     public function index()
     {
         $title = 'Our Best Cats Members Home Page';
-        $this->render('home/index', compact('title'));
+        $this->view->render('home/index', compact('title'));
     }
 }

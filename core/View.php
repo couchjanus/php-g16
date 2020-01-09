@@ -10,6 +10,22 @@
  */
 
 class View {
+    /**
+     * controller object that instantiated view object
+     *
+     * @var object
+     */
+    public $controller;
+
+    /**
+     * Constructor
+     *
+     * @param Controller $controller
+     */
+    public function __construct(Controller $controller){
+        $this->controller = $controller;
+     }
+
 
     /**
      * Renders and returns output for the given file with its array of data.
@@ -26,8 +42,9 @@ class View {
         if(!empty($data)) {
             extract($data);
         }
-        
         $path .= '.php';
-        return require VIEWS."/layouts/${layout}.php";
+        $rendered = require_once VIEWS."/layouts/${layout}.php";
+        $this->controller->response->setContent($rendered);
+        return $rendered;
     }
 } 

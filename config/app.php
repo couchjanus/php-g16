@@ -17,3 +17,4 @@
 
     define('LOGS', ROOT.'/logs');
     define('DB', ROOT.'/db');
+    define('DB_CONFIG_FILE', CONFIG.'/db.php');
