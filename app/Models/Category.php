@@ -8,10 +8,9 @@ class Category
 
     public static function index() 
     {
-        $connection = new Connection(require_once DB_CONFIG_FILE);
-        $stmt = $connection->pdo->query("SELECT * FROM categories ORDER BY id ASC");
-        $categories = $stmt->fetchAll();
-        return $categories;
+        $connection = Connection::connect(require_once DB_CONFIG_FILE);
+        $stmt = $connection->query("SELECT * FROM categories ORDER BY id ASC");
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     
     /**
@@ -21,23 +20,21 @@ class Category
 
     public static function getActiveCategories()
     {
-        $connection = new Connection(require_once DB_CONFIG_FILE);
-        $stmt = $connection->pdo->query(
-            "SELECT id, name, status FROM categories
-            WHERE status = 1
-            ORDER BY id ASC"
-        );
-        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $categories;
+        $connection = Connection::connect(require_once DB_CONFIG_FILE);
+        return $connection->query("SELECT * FROM categories WHERE status = 1 ORDER BY id ASC")->fetchAll(PDO::FETCH_OBJ);
     }
 
     public static function store($opts)
     {
-        $connection = new Connection(require_once DB_CONFIG_FILE);
-        $stmt = $connection->pdo->prepare("INSERT INTO categories (name, status) VALUES (?, ?)");
+        $connection = Connection::connect(require_once DB_CONFIG_FILE);
         $sql = "INSERT INTO categories (name, status) VALUES (?, ?)";
-        $stmt->bindParam(1, $opts[0]);
-        $stmt->bindParam(2, $opts[1]);
-        $stmt->execute();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute($opts);
     }
 }
+
+// class Category extends Model
+// {
+//     protected static $table = 'categories';
+//     protected static $primaryKey = 'id';
+// }

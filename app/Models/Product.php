@@ -1,12 +1,6 @@
 <?php
-class Product
+class Product extends Model
 {
-    /**
-     * Выводит список всех товаров
-    */
-    public static function index()
-    {
-        
-    }
-
+    protected static $table = 'products';
+    protected static $primaryKey = 'id';
 }
