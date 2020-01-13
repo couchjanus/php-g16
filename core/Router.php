@@ -1,49 +1,52 @@
 <?php
 
-$result = null;
+class Router
+{
+    protected $routes = ROUTES;
 
-// Подключаем строку запроса
-$uri = getURI();
-
-// Подключаем файл routes
-$filename = CONFIG.'/routes'.EXT;
-
-if (file_exists($filename)) {
-    $routes = include_once $filename;
-} else {
-    echo "Файл $filename не существует";
-}
-
-function getController($path) {
-    $segments = explode('\\', $path);
-    list($controller, $action)=explode('@', array_pop($segments));
-    $controllerPath = DIRECTORY_SEPARATOR;
-    foreach ($segments as $segment) {
-        $controllerPath .= $segment.DIRECTORY_SEPARATOR;
-    }
-    return [$controllerPath, $controller, $action];
-}
-
-function initController($controllerPath, $controller, $action, $result = null) {
-    $controllerPath = CONTROLLERS . $controllerPath . $controller . EXT;
-    if (file_exists($controllerPath)) {
-        include_once $controllerPath;
-        $controller = new $controller;
-        if (method_exists($controller, $action)) {
-            $controller->$action();
-            $result = true;
+    public function direct($uri)
+    {   
+        if (array_key_exists($uri, $this->routes)) {
+            return $this->init(...$this->getController($this->routes[$uri]));
+        } else {
+            foreach ($this->routes as $key => $val) {
+                $pattern = "@^" .preg_replace('/{([a-zA-Z0-9]+)}/', '(?<$1>[0-9]+)', $key). "$@";
+                // $pattern = "@^" .preg_replace('/{([a-zA-Z0-9\_\-]+)}/', '(?<$1>[a-zA-Z0-9\_\-]+)', $key). "$@";
+                preg_match($pattern, $uri, $matches);
+                array_shift($matches);
+                if ($matches) {
+                    $arr = $this->getController($val);
+                    $arr[] = $matches;
+                    return $this->init(...$arr);
+                }
+            }  
+            return $this->init(...$this->getController($this->routes['404']));
         }
     }
-    return $result;
-}
 
-foreach ($routes as $route => $path) {
-    if ($route == $uri) {
-        $result = initController(...getController($path));
-        break;
+    private function getController($path) {
+        $segments = explode('\\', $path);
+        list($controller, $action)=explode('@', array_pop($segments));
+        $controllerPath = DIRECTORY_SEPARATOR;
+        foreach ($segments as $segment) {
+            $controllerPath .= $segment.DIRECTORY_SEPARATOR;
+        }
+        return [$controllerPath, $controller, $action];
     }
-}
 
-if ($result === null) {
-    include_once VIEWS.'/errors/404'.EXT;
+    private function init($controllerPath, $controller, $action, $vars = []) {
+
+        $controllerPath = CONTROLLERS . $controllerPath . $controller . EXT;
+        if (file_exists($controllerPath)) {
+            include_once $controllerPath;
+            $controller = new $controller;
+            
+            if (! method_exists($controller, $action)) {
+                throw new Exception(
+                    "{$controller} does not respond to the {$action} action."
+                );
+            }
+        }
+        return $controller->$action($vars);
+    }
 }
