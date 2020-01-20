@@ -5,4 +5,5 @@
   <title>My Project</title>
   <link href="/assets/fontawesome/css/all.min.css" rel="stylesheet">
   <link href="/assets/css/main.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
 </head>

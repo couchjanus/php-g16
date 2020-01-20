@@ -18,4 +18,11 @@ return [
    //Главаня страница
    'index.php' => 'HomeController@index',
    '' => 'HomeController@index',
+
+
+   'api/shop' => 'HomeController@getProducts',
+   'api/shop/{id}' => 'HomeController@getProduct',
+   'api/product/{id}' => 'HomeController@getProductItem',
+   'api/categories' => 'HomeController@getCategories',
+   'api/category/{id}' => 'HomeController@getProductsByCategory',
 ];

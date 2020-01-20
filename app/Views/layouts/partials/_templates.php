@@ -30,14 +30,16 @@
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary view-detail">View Detail</button>
                         <button type="button" class="btn btn-sm btn-outline-secondary add-to-cart">Add To Cart</button>
+                        <button type="button" class="btn btn-sm btn-outline-primary">31 reviews</button>
                     </div>
-                    <small class="text-muted">31 reviews</small>
+                    
                 </div>
 
             </div>
         </div>
     </div>
 </template>
+
 
 <template id="carouselItem">
     <div class="carousel-detail-item">

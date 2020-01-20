@@ -1,8 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<div class="menu-button" data-menu="left"></div>
+<div class="menu-bar left">
+        <div class="menu-heading">
+            <a href="/">Categories</a>
+        </div>
+        <div class="menu-body">
+            
+        </div>
+</div>
+<input type="hidden" id="providerURL" value="/api/shop" />
     <div class="container-fluid">
-        <button type="button" class="btn btn-primary">
-            <span>Peculiar Shopaholic</span>
-        </button>
+        <a class="nav-link brand-name mx-5" href="/"><span class="">Peculiar Shopaholic</span></a>
 
         <button class="btn btn-primary d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
