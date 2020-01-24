@@ -31,7 +31,7 @@ class AuthController extends Controller
         parent::__construct();
 		$this->errors = array();
 
-        $session_id = Session::init($this->cookie_prefix.'Login');
+        $session_id = Session::init();
 		
         if($userId=Session::get('userId'))
 		{
@@ -124,18 +124,16 @@ class AuthController extends Controller
                 $this->user = $user = User::getByPrimaryKey($userId);
                 $this->logged_in = true;
                 $this->messages[] = "You Are Logged";
-
                 Session::set('messages', $this->messages);
                 Session::set('userId', $this->user->id);
-
                 setcookie($this->cookie_prefix.'Logged', $this->logged_in); 
                 
-                if($remember_me && !isset($_COOKIE[$this->cookie_prefix.'ID']))
-                {
-                    setcookie($this->cookie_prefix.'ID', $this->user->id, TIME_NOW + COOKIE_TIMEOUT, ''); 
-                    setcookie($this->cookie_prefix.'UserEmail', $this->user->email, TIME_NOW + COOKIE_TIMEOUT, ''); 
-                    setcookie($this->cookie_prefix.'Password', $this->user->password, TIME_NOW + COOKIE_TIMEOUT, ''); 
-                }
+                // if($remember_me && !isset($_COOKIE[$this->cookie_prefix.'ID']))
+                // {
+                //     setcookie($this->cookie_prefix.'ID', $this->user->id, TIME_NOW + COOKIE_TIMEOUT, ''); 
+                //     setcookie($this->cookie_prefix.'UserEmail', $this->user->email, TIME_NOW + COOKIE_TIMEOUT, ''); 
+                //     setcookie($this->cookie_prefix.'Password', $this->user->password, TIME_NOW + COOKIE_TIMEOUT, ''); 
+                // }
                 Helper::redirect('/profile'); //перенаправляем в личный кабинет
             }
         }
@@ -150,14 +148,14 @@ class AuthController extends Controller
     function logout()
 	{
 		//destroy the cookies
-        if( isset($_COOKIE[$this->cookie_prefix.'ID']) )
-		{	
-			//Set cookies to one ago. Browser will auto-purge them.
-			setcookie( $this->cookie_prefix.'ID', '', TIME_NOW - 3600 );	//User ID
-			setcookie( $this->cookie_prefix.'UserEmail', '', TIME_NOW - 3600 ); //User Email
-            setcookie( $this->cookie_prefix.'Password', '', TIME_NOW - 3600 ); //User Password
-            setcookie($this->cookie_prefix.'Logged', '', TIME_NOW - 3600); 
-		}
+        // if( isset($_COOKIE[$this->cookie_prefix.'ID']) )
+		// {	
+		// 	//Set cookies to one ago. Browser will auto-purge them.
+		// 	setcookie( $this->cookie_prefix.'ID', '', TIME_NOW - 3600 );	//User ID
+		// 	setcookie( $this->cookie_prefix.'UserEmail', '', TIME_NOW - 3600 ); //User Email
+        //     setcookie( $this->cookie_prefix.'Password', '', TIME_NOW - 3600 ); //User Password
+        //     setcookie($this->cookie_prefix.'Logged', '', TIME_NOW - 3600); 
+		// }
         Session::destroy('userId');
         $this->logged_in = FALSE;
         setcookie($this->cookie_prefix.'Logged', $this->logged_in, TIME_NOW - 3600); 

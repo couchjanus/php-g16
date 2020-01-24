@@ -41,5 +41,5 @@ return [
    'login' => 'AuthController@signin',
    'logout' => 'AuthController@logout',
    'profile' => 'ProfileController@index',
-
+   
 ];

@@ -3,8 +3,7 @@
 class Session
 {
     private static $_sessionStarted = false;
-    private static $session_name = 'SHOPAHOLICSID';
-
+    
     public static function init()
     {
         if (self::$_sessionStarted == false) {
@@ -15,15 +14,9 @@ class Session
             ini_set("session.hash_function", "sha256");
             ini_set("session.cache_limiter", 'nocache');
             ini_set("session.use_trans_sid", 0);
-            
-            // set up the session name
-            // session_name(self::$session_name); 	
-            
-            //sync to the previous/current session (if any)
-            // Устанавливаем время жизни равным одному дню.
-            
+
             session_start(
-                ['cookie_lifetime' => 86400,]
+                ['cookie_lifetime' => 0,]
             );
             self::$_sessionStarted = true;
         }
