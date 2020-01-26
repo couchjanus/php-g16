@@ -26,6 +26,10 @@ return [
    'admin/users/edit/{id}' => 'Admin\UserController@edit',
    'admin/users/delete/{id}' => 'Admin\UserController@delete',
 
+   'admin/orders' => 'Admin\OrderController@index',
+   'admin/orders/edit/{id}' => 'Admin\OrderController@edit',
+   'admin/orders/delete/{id}' => 'Admin\OrderController@delete',
+
    //Главаня страница
    'index.php' => 'HomeController@index',
    '' => 'HomeController@index',
@@ -36,10 +40,17 @@ return [
    'api/product/{id}' => 'HomeController@getProductItem',
    'api/categories' => 'HomeController@getCategories',
    'api/category/{id}' => 'HomeController@getProductsByCategory',
+   'api/cart' => 'OrderController@cart',
 
    'register' => 'AuthController@signup',
    'login' => 'AuthController@signin',
    'logout' => 'AuthController@logout',
    'profile' => 'ProfileController@index',
+
+   'profile/orders' => 'ProfileController@ordersList',
+   'profile/orders/view/{id}' => 'ProfileController@ordersView',
+   'profile/orders/edit/{id}' => 'ProfileController@ordersEdit',
+   'profile/orders/delete/{id}' => 'ProfileController@ordersDelete',
+   
    
 ];

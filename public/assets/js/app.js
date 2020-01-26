@@ -364,4 +364,31 @@ function makeDataList(data) {
             el('.menu-bar').classList.add('is-active');
         }
     });
+
+    // checkout__now
+    el(".checkout__now").addEventListener("click", () => {
+        closeCart();
+        if (localStorage.basket && localStorage.basket.length > 2) {
+            let cart = getProducts();
+            fetch("/api/cart", {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    cart: cart,
+                })
+            })
+            .then(function(response) {
+                console.log("Request success: ", response);
+                localStorage.removeItem("basket");
+                document.querySelector(".cart-items").innerHTML = "";
+                updateTotal();
+                document.location.replace("/profile");
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        }
+    });
 })();

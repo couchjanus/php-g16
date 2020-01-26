@@ -6,11 +6,21 @@
 require_once MODELS.'/User.php';
 require_once MODELS.'/Role.php';
 
-class UserController extends Controller
+class UserController extends Admin
 {
     private $costs = [
         'cost' => 12,
     ];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        if ($this->isAdmin() !== true) {
+            Helper::redirect('/profile');
+        }
+    }
+
     /**
      * Главная страница управления users
      *

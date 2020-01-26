@@ -16,14 +16,21 @@
          </div>
      </div>
      <ul class="list-unstyled checkout">
-         <li>
-             <a href="#" class="clear-cart">Clear Cart</a>
-         </li>
-         <li>
-             <a href="#" class="check-out">Checkout</a>
-         </li>
-         <li>
+        <li>
+            <a href="#" class="clear-cart">Clear Cart</a>
+        </li>
+         
+        <?php if (Helper::isGuest()) :?>
+            <li>
+            To make your order please <a href="/login" class="check-out">Sign In</a>
+            </li>
+        <?php else :?>
+            <li>
+                <a href="#" class="check-out checkout__now">Checkout</a>
+            </li>
+        <?php endif;?>
+        <li>
              <a href="#" class="article">Continue Shopping</a>
-         </li>
-     </ul>
- </nav>
+        </li>
+    </ul>
+</nav>

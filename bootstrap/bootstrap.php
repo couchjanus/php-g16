@@ -38,8 +38,10 @@ require_once CORE.'/Helper.php';
 require_once CORE.'/View.php';
 require_once CORE.'/Response.php';
 require_once CORE.'/Controller.php';
-require_once CORE.'/Slug.php';
 require_once CORE.'/Model.php';
+require_once CORE.'/Admin.php';
+require_once CORE.'/Slug.php';
+
 
 require_once CORE.'/Router.php';
 
