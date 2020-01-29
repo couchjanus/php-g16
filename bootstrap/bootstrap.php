@@ -1,49 +1,40 @@
 <?php
-// Общие настройки
-// Устанавливаем временную зону по умолчанию
 date_default_timezone_set('Europe/Kiev');    
-// Ошибки и протоколирование
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL | E_NOTICE | E_STRICT | E_DEPRECATED);
+// ============================================
 
-function dd($mix)
-{
-    echo '<pre>'.print_r($mix, true).'</pre>';
-}
 
-function view($path, $data = null, $layout='app') 
-{
-	if ( !empty($data) ) {
-		extract($data);
-	}
-	$path .= '.php';
-	return require VIEWS."/layouts/${layout}.php";
-}
-
-function getURI()
-{
-    if (isset($_SERVER['REQUEST_URI']) and !empty($_SERVER['REQUEST_URI']))
-        return trim($_SERVER['REQUEST_URI'], '/');
-}
-function conf($mix)
-{
-	return include(CONFIG."/".$mix.".php"); 
-}
 
 require_once dirname(__DIR__).'/config/app.php';
-require_once CORE.'/Connection.php';
 
-require_once CORE.'/Helper.php';
-require_once CORE.'/View.php';
-require_once CORE.'/Response.php';
-require_once CORE.'/Controller.php';
-require_once CORE.'/Model.php';
-require_once CORE.'/Admin.php';
-require_once CORE.'/Slug.php';
+spl_autoload_register(function($class) {
+	$file = CORE."/".$class.EXT;
+	if(is_file($file)) {
+		require_once $file;
+	}
+	
+	// $filename = MODELS . $class . EXT;
 
+	// if (file_exists($filename)) {
+	// 	include_once $filename;
+	// }
+});
 
-require_once CORE.'/Router.php';
+// spl_autoload_register(function($class) {
+// 	$file = ROOT.'/'.str_replace('\\', '/', $class).'.php';
+// 	var_dump($file);
+// 	if(is_file($file)) {
+// 		require_once $file;
+// 	}
+// });
 
-$router = new Router();
-$router->direct(getURI());
+// use core\App;
+
+$app = new App();
+$app->init();
+
+// $app = new \core\App();
+// $app->init();
+

@@ -1,0 +1,115 @@
+.showcase--wrapper {
+    display: flex;
+}
+.brand-name {
+    color: #fff;
+}
+
+.navbar .menu-button {
+    position: absolute;
+    left: 20px;
+    height: 7px;
+    width: 50px;
+    background: #fff;
+    top: calc(70px / 2 - 5px);
+    cursor: pointer;
+    transition: background ease .3s;
+}
+
+.navbar .menu-button:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 13px;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    transition: all ease .3s;
+}
+
+.navbar .menu-button:after {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    transition: all ease .3s;
+}
+
+.navbar .menu-button[data-menu="right"] {
+    right: 20px;
+    left: auto;
+}
+
+.navbar .menu-button.is-clicked {
+    background: rgba(255, 255, 255, 0);
+    transition: background ease .3s;
+}
+
+.navbar .menu-button.is-clicked:before {
+    background: #fff;
+    transform: rotate(45deg);
+    bottom: 0;
+    transition: all ease .3s;
+}
+
+.navbar .menu-button.is-clicked:after {
+    background: #fff;
+    transform: rotate(-45deg);
+    top: 0;
+    transition: all ease .3s;
+}
+
+.menu-bar {
+    position:fixed;
+    z-index: 2;
+    top: 70px;
+    width: 300px;
+    height: calc(100% - 70px);
+    background: #555;
+    color: #fff;
+    transition: transform ease .3s;
+}
+
+.menu-bar.left {
+    left: 0.1em;
+    transform: translateX(-300px);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.menu-bar.right {
+    right: 0;
+    transform: translateX(300px);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.menu-bar.is-active {
+    transform: translate(0);
+    transition: transform ease .3s;
+}
+
+.menu-bar .menu-heading {
+    width: 100%;
+    font-size: 2em;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.menu-bar .menu-body a {
+    text-decoration: none;
+    outline: 0;
+    color: #fff;
+    width: calc(100% - 20px);
+    display: inline-block;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    transition: background ease .3s;
+}
+
+.menu-bar .menu-body a:hover {
+    background: #333;
+    transition: background ease .3s;
+}

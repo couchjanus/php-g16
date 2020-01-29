@@ -6,7 +6,8 @@
     const APP = ROOT.'/app';
 
     const VIEWS = ROOT.'/app/Views';
-    const CONTROLLERS = ROOT.'/app/Controllers';
+    // const CONTROLLERS = ROOT.'/app/Controllers';
+    const CONTROLLERS ="\App\Controllers\\";
     const MODELS = ROOT.'/app/Models/';
     const CONFIG = ROOT.'/config';
     
